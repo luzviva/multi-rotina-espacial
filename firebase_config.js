@@ -9,14 +9,14 @@ import { getAuth } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-aut
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
-// Acessando as variáveis de ambiente
+// As chaves são colocadas diretamente aqui, pois import.meta.env não está disponível sem um bundler.
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
-  appId: import.meta.env.VITE_FIREBASE_APP_ID
+  apiKey: "AIzaSyDYTgt_CgQUp6kYfPeqc7JCaJuaeuEzP4Q",
+  authDomain: "multirotinaespacial.firebaseapp.com",
+  projectId: "multirotinaespacial",
+  storageBucket: "multirotinaespacial.firebasestorage.app",
+  messagingSenderId: "69790293324",
+  appId: "1:69790293324:web:3a2eb68b8beaeabb9ac3e9"
 };
 
 // Initialize Firebase
