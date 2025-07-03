@@ -3,10 +3,8 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 // Importar o serviço de autenticação
 import { getAuth } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-// TODO: Add SDKs for Firebase products that you want to use
-// Por exemplo, para Firestore:
-// import { getFirestore } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-// https://firebase.google.com/docs/web/setup#available-libraries
+// Importar o serviço de banco de dados Firestore
+import { getFirestore } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 // Your web app's Firebase configuration
 // As chaves são colocadas diretamente aqui, pois import.meta.env não está disponível sem um bundler.
@@ -22,6 +20,7 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app); // Inicializar o serviço de autenticação
+const db = getFirestore(app); // Inicializar o serviço de banco de dados Firestore
 
-// Exportar 'app' e 'auth' para que outros módulos possam importá-los
-export { app, auth };
+// Exportar 'app', 'auth' e 'db' para que outros módulos possam importá-los
+export { app, auth, db };
