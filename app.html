@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rotina Espacial - App</title>
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="text-white font-nunito overflow-y-scroll">
+
+    <div id="loading-overlay" class="fixed inset-0 bg-gray-900 bg-opacity-95 flex flex-col items-center justify-center z-50 transition-opacity duration-500">
+        <div class="text-yellow-300 text-4xl mb-4 font-black animate-title-glow">Rotina Espacial</div>
+        <div class="text-cyan-200 text-xl">Carregando dados da galáxia...</div>
+        <div class="mt-8 w-16 h-16 border-4 border-dashed rounded-full animate-spin border-cyan-400"></div>
+    </div>
+
+    <div id="app-container" class="min-h-screen w-full p-4 md:p-8 relative opacity-0 transition-opacity duration-500">
+
+        <main id="child-view" class="flex flex-col h-full">
+            <header class="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-8 space-y-4 lg:space-y-0">
+                <div class="space-y-2">
+                    <h1 id="welcome-title" class="text-4xl md:text-6xl font-black text-theme-primary drop-shadow-lg animate-title-glow">Rotina Espacial</h1>
+                    <p id="child-name-display" class="text-2xl text-theme-secondary"></p>
+                </div>
+                <div class="flex items-center space-x-4">
+                     <div id="coin-counter" class="flex items-center gap-3 bg-black bg-opacity-40 p-3 lg:p-4 rounded-2xl border-2 border-theme-secondary shadow-lg transition-all duration-300 hover:shadow-theme-secondary/30">
+                        <img src="https://r2.flowith.net/files/o/1749768887371-star_coin_icon_for_children's_space-themed_rewards_system_index_1@1024x1024.png" alt="Estrela" class="w-10 h-10 md:w-14 md:h-14 animate-star-pulse">
+                        <span id="coin-total" class="text-3xl md:text-5xl font-black text-theme-primary">0</span>
+                    </div>
+                </div>
+            </header>
+
+            <section id="schedule-grid" class="flex-grow my-8">
+            </section>
+            
+            <footer class="mt-8 text-center flex justify-between items-center">
+                <button id="logout-btn" class="p-3 rounded-full bg-red-600 hover:bg-red-500 transition-all duration-300 shadow-lg hover:shadow-red-500/30 hover:scale-110 active:scale-95">
+                    <i data-lucide="log-out" class="w-7 h-7"></i>
+                </button>
+                <button id="switch-to-admin" class="p-4 rounded-full bg-purple-600 hover:bg-purple-500 transition-all duration-300 shadow-lg hover:shadow-purple-500/30 hover:scale-110 active:scale-95">
+                    <i data-lucide="settings" class="w-8 h-8"></i>
+                </button>
+                 <button id="open-store-btn" class="p-3 rounded-full bg-indigo-600 hover:bg-indigo-500 transition-all duration-300 shadow-lg hover:shadow-indigo-500/30 hover:scale-110 active:scale-95">
+                    <i data-lucide="shopping-cart" class="w-7 h-7"></i>
+                </button>
+            </footer>
+        </main>
+
+        <aside id="admin-view" class="hidden flex-col h-full">
+            <header class="flex justify-between items-center mb-8">
+                <h1 class="text-4xl md:text-5xl font-black text-theme-secondary">Painel dos Pais</h1>
+                 <button id="switch-to-child" class="p-4 rounded-full bg-cyan-600 hover:bg-cyan-500 transition-all duration-300 shadow-lg hover:shadow-cyan-500/30 hover:scale-110 active:scale-95">
+                    <i data-lucide="home" class="w-8 h-8"></i>
+                </button>
+            </header>
+
+            <section id="parent-controls" class="bg-black bg-opacity-50 backdrop-blur-sm p-6 rounded-2xl border border-gray-700 mb-8 flex flex-col items-center">
+                <h2 class="text-2xl font-bold mb-4 text-theme-primary">Controle de Moedas</h2>
+                <div class="flex items-center gap-4">
+                    <button id="remove-coin-btn" class="p-4 rounded-full bg-red-600 hover:bg-red-500 action-btn">
+                        <i data-lucide="minus" class="w-8 h-8 text-white"></i>
+                    </button>
+                    <div class="flex items-center gap-2 bg-black bg-opacity-40 p-3 rounded-xl border border-theme-secondary shadow-lg">
+                        <img src="https://r2.flowith.net/files/o/1749768887371-star_coin_icon_for_children's_space-themed_rewards_system_index_1@1024x1024.png" alt="Estrela" class="w-10 h-10">
+                        <span id="admin-coin-total" class="text-3xl font-black text-theme-primary">0</span>
+                    </div>
+                    <button id="add-coin-btn" class="p-4 rounded-full bg-green-600 hover:bg-green-500 action-btn">
+                        <i data-lucide="plus" class="w-8 h-8 text-white"></i>
+                    </button>
+                </div>
+            </section>
+
+            <section class="bg-black bg-opacity-50 backdrop-blur-sm p-6 rounded-2xl border border-gray-700 mb-8">
+                <h2 id="form-title" class="text-3xl font-bold mb-6 text-theme-primary">Adicionar/Editar Tarefa</h2>
+                <form id="task-form" class="space-y-4">
+                    <input type="hidden" id="task-id">
+                    <div>
+                        <label for="task-description" class="mb-2 font-bold text-theme-secondary block">Descrição</label>
+                        <input type="text" id="task-description" placeholder="Ex: Escovar os dentes" class="input-field w-full" required>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label for="task-time" class="mb-2 font-bold text-theme-secondary block">Horário</label>
+                            <input type="time" id="task-time" class="input-field w-full" required>
+                        </div>
+                        <div>
+                            <label for="task-reward" class="mb-2 font-bold text-theme-secondary block">Recompensa</label>
+                            <input type="checkbox" id="task-reward" class="w-6 h-6 accent-yellow-400">
+                        </div>
+                    </div>
+                    <div class="flex flex-col sm:flex-row gap-4 mt-4">
+                        <button type="submit" id="form-submit-btn" class="flex-1 btn-primary bg-green-600 hover:bg-green-500">
+                             Adicionar Tarefa
+                        </button>
+                        <button type="button" id="form-cancel-btn" class="flex-1 btn-secondary bg-red-600 hover:bg-red-500 hidden">
+                             Cancelar Edição
+                        </button>
+                    </div>
+                </form>
+            </section>
+             <section class="bg-black bg-opacity-50 backdrop-blur-sm p-6 rounded-2xl border border-gray-700">
+                <h2 class="text-3xl font-bold mb-6 text-theme-primary">Tarefas da Semana</h2>
+                <div id="admin-task-list" class="space-y-3 overflow-y-auto max-h-96">
+                </div>
+            </section>
+        </aside>
+
+        <div id="pin-modal" class="fixed inset-0 bg-black bg-opacity-80 backdrop-blur-md flex items-center justify-center z-50 hidden">
+            <div class="bg-gray-800 border border-purple-500 rounded-2xl p-8 shadow-2xl w-full max-w-sm text-center">
+                <h2 class="text-2xl font-bold text-white mb-4">Acesso Parental</h2>
+                <p class="text-gray-300 mb-6">Por favor, insira o PIN de 4 dígitos para continuar.</p>
+                <form id="pin-form">
+                    <input type="password" id="pin-input" maxlength="4" class="input-field text-center text-3xl tracking-[1rem] w-full" required>
+                    <div class="flex gap-4 mt-6">
+                        <button type="button" id="pin-cancel" class="flex-1 btn-secondary bg-gray-600 hover:bg-gray-500">Cancelar</button>
+                        <button type="submit" class="flex-1 btn-primary bg-purple-600 hover:bg-purple-500">Confirmar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+    </div>
+
+    <script type="module" src="app.js"></script>
+</body>
+</html>
