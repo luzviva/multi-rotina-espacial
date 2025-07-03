@@ -1,6 +1,8 @@
 // Import the functions you need from the SDKs you need
 // Usando importação via CDN para o navegador
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+// Importar o serviço de autenticação
+import { getAuth } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 // TODO: Add SDKs for Firebase products that you want to use
 // Por exemplo, para Firestore:
 // import { getFirestore } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
@@ -19,6 +21,7 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+const auth = getAuth(app); // Inicializar o serviço de autenticação
 
-// Exemplo de como você pode usar o 'app' em outras partes do seu código
-// export default app; // Se estiver usando módulos para exportar o 'app'
+// Exportar 'app' e 'auth' para que outros módulos possam importá-los
+export { app, auth };
